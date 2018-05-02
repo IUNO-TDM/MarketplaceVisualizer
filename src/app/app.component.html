@@ -47,20 +47,27 @@ stroke-width: 12px;"></path>
   </svg>
 </div>
 
-<!--<div #outer id="outer">-->
-<!--<div #teal id="teal"></div>-->
-<!--<div #red id="red"></div>-->
-<!--<div #green id="green"></div>-->
-<!--<div #purple id="purple"></div>-->
-<!--<div #orange id="orange"></div>-->
-<!--<div #aqua id="aqua"></div>-->
-<!--</div>-->
-
-
-<div class="visualizerContainer" fxLayout="column">
+<div #container class="visualizerContainer" fxLayout="column">
   <div class="upperTwoThirds" fxFlex="66" fxLayout="row">
     <div class="tdhs-container" fxFlex="25" fxLayout="column">
-      <div class="tdh-spacer" fxFlex="20"></div>
+      <div class="tdh-spacer" fxFlex="20">
+        <button (click)="animate()">animate</button>
+        <select [(ngModel)]="elementToAnimate">
+          <option value="rectangle">rectangle</option>
+          <option value="circle">circle</option>
+          <option value="star">star</option>
+        </select>
+        <select [(ngModel)]="pathToAnimate">
+          <option value="path1">path1</option>
+          <option value="path2">path2</option>
+          <option value="path3">path3</option>
+          <option value="path4">path4</option>
+          <option value="path5">path5</option>
+          <option value="path6">path6</option>
+          <option value="path7">path7</option>
+        </select>
+        Reverse: <input type="checkbox" name="animationReversed" [(ngModel)]="animationReversed">
+      </div>
       <div class="tdh-container" fxFlex="*"  fxLayout="row" fxLayoutAlign="center center">
         <div #tdh1 id="tdh1" class="tdh">tdh1</div>
       </div>

@@ -136,102 +136,22 @@ export class SvgDraw {
       path.setAttribute('d', 'M' + startX + ' ' + startY +
         ' L' + endX + ' ' + endY);
     } else {
-      const deltaX = (endX - startX) * 0.3;
-      const deltaY = (endY - startY) * 0.3;
-      // for further calculations which ever is the shortest distance
-      const delta = this.absolute(deltaY) < this.absolute(deltaX) ? this.absolute(deltaY) : this.absolute(deltaX);
 
-      // set sweep-flag (counter/clock-wise)
-      // if start element is closer to the left edge,
-      // draw the first arc counter-clockwise, and the second one clock-wise
-      // let arc1, arc2: number;
-      // arc1 = 0;
-      // arc2 = 1;
-      // if (
-      //   (situation === 1 && startX > endX) ||
-      //   (situation === 3 && startX < endX) ||
-      //   (situation === 2 && startY > endY) ||
-      //   (situation === 4 && startY < endY)) {
-      //   arc1 = 1;
-      //   arc2 = 0;
-      // }
-
-      if (situation === 1) {
-        if (startX > endX) {
-          path.setAttribute('d', 'M' + startX + ' ' + startY +
-            ' V' + (startY + delta) +
-            ' A' + delta + ' ' + delta + ' 0 0 1' + (startX - delta) + ' ' + (startY + 2 * delta) +
-            ' H' + (endX + delta) + ' ' +
-            ' A' + delta + ' ' + delta + ' 0 0 0' + endX + ' ' + (startY + 3 * delta) +
-            ' V' + endY);
-        } else {
-          path.setAttribute('d', 'M' + startX + ' ' + startY +
-            ' V' + (startY + delta) +
-            ' A' + delta + ' ' + delta + ' 0 0 0' + (startX + delta) + ' ' + (startY + 2 * delta) +
-            ' H' + (endX - delta) + ' ' +
-            ' A' + delta + ' ' + delta + ' 0 0 1' + endX + ' ' + (startY + 3 * delta) +
-            ' V' + endY);
-        }
-      } else if (situation === 3) {
-        if (startX > endX) {
-          path.setAttribute('d', 'M' + startX + ' ' + startY +
-            ' V' + (startY - delta) +
-            ' A' + delta + ' ' + delta + ' 0 0 0' + (startX - delta) + ' ' + (startY - 2 * delta) +
-            ' H' + (endX + delta) + ' ' +
-            ' A' + delta + ' ' + delta + ' 0 0 1' + endX + ' ' + (startY - 3 * delta) +
-            ' V' + endY);
-        } else {
-          path.setAttribute('d', 'M' + startX + ' ' + startY +
-            ' V' + (startY - delta) +
-            ' A' + delta + ' ' + delta + ' 0 0 1' + (startX + delta) + ' ' + (startY - 2 * delta) +
-            ' H' + (endX - delta) + ' ' +
-            ' A' + delta + ' ' + delta + ' 0 0 0' + endX + ' ' + (startY - 3 * delta) +
-            ' V' + endY);
-        }
-      } else if (situation === 2) {
-        if (startY > endY) {
-          path.setAttribute('d', 'M' + startX + ' ' + startY +
-            ' H' + (startX - delta) +
-            ' A' + delta + ' ' + delta + ' 0 0 1' + (startX - 2 * delta) + ' ' + (startY - delta) +
-            ' V' + (endY + delta) + ' ' +
-            ' A' + delta + ' ' + delta + ' 0 0 0' + (startX - 3 * delta) + ' ' + endY +
-            ' H' + endX);
-        } else {
-          path.setAttribute('d', 'M' + startX + ' ' + startY +
-            ' H' + (startX - delta) +
-            ' A' + delta + ' ' + delta + ' 0 0 0' + (startX - 2 * delta) + ' ' + (startY + delta) +
-            ' V' + (endY - delta) + ' ' +
-            ' A' + delta + ' ' + delta + ' 0 0 1' + (startX - 3 * delta) + ' ' + endY +
-            ' H' + endX);
-        }
-      } else if (situation === 4) {
-        if (startY > endY) {
-          path.setAttribute('d', 'M' + startX + ' ' + startY +
-            ' H' + (startX + delta) +
-            ' A' + delta + ' ' + delta + ' 0 0 0' + (startX + 2 * delta) + ' ' + (startY - delta) +
-            ' V' + (endY + delta) + ' ' +
-            ' A' + delta + ' ' + delta + ' 0 0 1' + (startX + 3 * delta) + ' ' + endY +
-            ' H' + endX);
-        } else {
-          path.setAttribute('d', 'M' + startX + ' ' + startY +
-            ' H' + (startX + delta) +
-            ' A' + delta + ' ' + delta + ' 0 0 1' + (startX + 2 * delta) + ' ' + (startY + delta) +
-            ' V' + (endY - delta) + ' ' +
-            ' A' + delta + ' ' + delta + ' 0 0 ß' + (startX + 3 * delta) + ' ' + endY +
-            ' H' + endX);
-        }
+      if (situation === 1 || situation === 3) {
+        path.setAttribute('d', 'M' + startX + ' ' + startY +
+          ' C' + startX + ' ' + (startY + endY) / 2 +
+          ' ' + endX + ' ' + (startY + endY) / 2 +
+          ' ' + endX + ' ' + endY);
+      } else if (situation === 2 || situation === 4) {
+        path.setAttribute('d', 'M' + startX + ' ' + startY +
+          ' C' + (startX + endX) / 2 + ' ' + startY +
+          ' ' + (startX + endX) / 2 + ' ' + endY +
+          ' ' + endX + ' ' + endY);
       }
 
     }
+
   }
 
-
-  static signum(x) {
-    return (x < 0) ? -1 : 1;
-  }
-
-  static absolute(x) {
-    return (x < 0) ? -x : x;
-  }
 
 }

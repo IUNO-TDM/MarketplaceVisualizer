@@ -1,13 +1,13 @@
 
 
 div {
-  opacity: 0.8;
+  /*opacity: 0.8;*/
 }
 #svgContainer {
   z-index: -10;
   position: absolute;
-  background-color: silver;
-  opacity: 0.5;
+  /*background-color: silver;*/
+  /*opacity: 0.5;*/
   top: 0;
   bottom: 0;
   left: 0;

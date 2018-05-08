@@ -7,6 +7,7 @@ import {Transaction} from './blockexplorer/Transaction';
 
 declare var Snap: any;
 declare var mina: any;
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -47,7 +48,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild('machine3') machine3: ElementRef;
 
 
-  @ViewChild('blockexplorer')blockexplorer: BlockexplorerComponent;
+  @ViewChild('blockexplorer') blockexplorer: BlockexplorerComponent;
 
   snapSVG: any;
   machineSVG: any;
@@ -196,6 +197,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   startMachineAnimation(machine) {
+    if (machine['animationActive']) {
+      return;
+    }
     machine['animationActive'] = true;
     const led = machine.select('#LED');
     led.attr('opacity', 1);
@@ -205,18 +209,18 @@ export class AppComponent implements OnInit, AfterViewInit {
     function checkAnimationStillActive() {
       if (machine['animationActive'] && machine['animationActive'] === true) {
         machineAnimation();
-      }else {
+      } else {
         led.attr('opacity', 0);
         cocktail.attr('opacity', 0);
       }
     }
 
     function machineAnimation() {
-      Snap.animate(0, 360, function(step){
+      Snap.animate(0, 360, function (step) {
         const m = new Snap.Matrix().rotate(-step, 200, 200);
         led.transform(m);
-        cocktail.attr('opacity', Math.sin( step / 180 * Math.PI));
-      }, 3000 , mina.linear, checkAnimationStillActive);
+        cocktail.attr('opacity', Math.sin(step / 180 * Math.PI));
+      }, 3000, mina.linear, checkAnimationStillActive);
     }
 
     machineAnimation();
@@ -228,7 +232,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   addTransaction() {
     let tx = new Transaction();
-    tx.tx = "xsdcfvgbhnjmk";
+    tx.tx = 'xsdcfvgbhnjmk';
     tx.date = new Date();
     tx.amount = 1;
     this.blockexplorer.addTransaction(tx);
